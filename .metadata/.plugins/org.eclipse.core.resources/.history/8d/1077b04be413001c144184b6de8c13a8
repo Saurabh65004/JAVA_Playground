@@ -1,0 +1,190 @@
+package Array1;
+import java.util.*;
+
+public class ArrangeNumbersInArray {
+
+	public static int pairSum(int arr[], int expectedSum) {
+		Arrays.sort(arr);  //O(n/2)
+		int i=0;
+		int ans=0;
+		int j=arr.length-1;
+		while(i<j) {
+			int currentSum=arr[i]+arr[j];
+			
+			if(currentSum < expectedSum) {
+				i++;
+			}
+			else if(currentSum > expectedSum) {
+				j--;
+			}
+			else {
+				int initialStart=arr[i];
+				int initialEnd=arr[j];
+				
+				//Equal to sum
+				if(initialStart == initialEnd) {
+					//check if all elements are same.
+					int totalElements=(j-i)+1;
+					ans=totalElements*2;
+					break;
+				}
+				else {
+					int initialStartingIndex=i;
+					int initialEndIndex=j;
+
+					int currentStart=i;
+					int	currentEnd=j;
+					
+					do {
+						currentStart++;
+					}while(initialStart == arr[currentStart] && currentStart < currentEnd);
+
+					do {
+						currentEnd--;
+					}while(initialEnd == arr[currentEnd] && currentStart < currentEnd);
+						
+					int totalStart=currentStart-initialStartingIndex+1;
+					int totalEnd=currentEnd-initialEndIndex+1;
+					
+					if(totalStart+totalEnd > 1) {
+						ans=2*(totalStart+totalEnd);	
+					}else {
+						ans++;
+					}
+					i=currentStart;
+					j=currentEnd;
+				}
+				
+				printValue(ans, "Pair Sum");
+				return ans;
+				
+			}
+		}
+		printValue(arr[i], "Pair sum");
+		printValue(arr[j], null);
+		return;
+	}
+	
+	public static int findUnique(int arr[]) {
+		if(arr.length <= 1) {
+			printValue(-1, "Unique in Array");
+			return -1;
+		}
+
+		int ans=0;
+		for(int i=0;i<arr.length;i++) {
+			ans^=arr[i];
+		}
+		printValue(ans, "Unique in Array");
+		return ans;
+	}
+
+	
+	public static int findDuplicate(int arr[]) {
+		if(arr.length <= 1) {
+			printValue(-1, "Duplicate in Array");
+			return -1;
+		}
+
+		HashMap<Integer, Boolean> map=new HashMap<>();
+		
+		for(int i=0;i<arr.length;i++) {
+			if(map.containsKey(arr[i])) {
+				map.put(arr[i], true);
+				//already exists.
+			}else {
+				map.put(arr[i], false);
+				//putting in first time
+			}
+		}
+		int ans=0;
+		Set<Integer> keys=map.keySet();
+		for(int i: keys) {
+			if(map.get(i)) {
+				ans=i;
+				break;
+			}
+		}
+
+		printValue(ans, "Duplicate in Array");
+		return ans;
+	}
+
+	public static void swap(int arr[], int index1, int index2) {
+		int temp=arr[index1];
+		arr[index1]=arr[index2];
+		arr[index2]=temp;
+	}
+	
+	
+	public static void swapAlternate(int arr[]) {
+		int n=arr.length;
+		if(n <= 1) {
+			printArray(arr, "Swap Alternate");
+			return;
+		}
+		//if 0 or 1 elements print as it is.
+		for(int i=0;i<n-1;i+=2) {
+			swap(arr, i, i+1);
+		}
+		printArray(arr, "Swap Alternate");
+		
+	}
+	
+	public static int [] arrangeNumbers(int n) {
+		int arr[]=new int[n];
+		
+		int limit1= n%2 == 0 ? n/2 : (n/2)+1;		//in case of even numbers, mod+1.
+		int k=0;
+		int value=1;
+		for(int i=0; i<limit1; i++, k++, value+=2){
+			arr[i]=value;
+			
+		}
+		value=2;
+		for(int i=n-1; i>=k; i--,value+=2) {
+			arr[i]=value;
+		}
+		printArray(arr, "Arrange Numbers");
+		return arr;
+	}
+	
+
+	public static int[] inputArray() {
+		Scanner sc=new Scanner(System.in);
+		int n =sc.nextInt();
+		int arr[]=new int[n];
+		for(int i=0;i<n;i++) {
+			arr[i]=sc.nextInt();
+		}
+		return arr;
+	}
+	
+	public static void printArray(int arr[], String text) {
+		System.out.println(text);
+		for(int i=0; i<arr.length; i++) {
+			System.out.print(arr[i]+" ");
+		}
+		System.out.println();
+	}
+	
+	public static void printValue(int n, String text) {
+		if(text != null) {
+			System.out.println(text);
+		}
+		System.out.print(n);
+		System.out.println();
+	}
+
+	
+	public static void main(String args[]) {
+		Scanner sc=new Scanner(System.in);
+		int arr[]=inputArray();
+		findDuplicate(arr);
+//		findUnique(arr);
+//		swapAlternate(arr);
+//		int n=sc.nextInt();
+//		int arr[]=arrangeNumbers(n);
+		sc.close();
+	}
+}
