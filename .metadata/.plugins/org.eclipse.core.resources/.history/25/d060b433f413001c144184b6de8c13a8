@@ -5,7 +5,7 @@ public class ArrangeNumbersInArray {
 
 	public static int tripletSum(int arr[], int expectedSum) {
 		Arrays.sort(arr);
-		int n=arr.length;
+		int n=arr.length-1;
 		int triplets=0;
 		for(int i=0;i<n;i++) {
 			int remainingSum= expectedSum-arr[i];
@@ -19,7 +19,7 @@ public class ArrangeNumbersInArray {
 	}
 
 	public static int pairSum(int arr[], int expectedSum, int start, int end) {
-		//Arrays Sorted
+		Arrays.sort(arr);  //O(n/2)
 		int i=start;
 		int pairs=0;
 		int j=end;
@@ -238,7 +238,7 @@ public class ArrangeNumbersInArray {
 		Scanner sc=new Scanner(System.in);
 		int n=sc.nextInt();
 		int arr[]=inputArray();
-		tripletSum(arr, n);
+		triplet(arr, n);
 //		findDuplicate(arr);
 //		findUnique(arr);
 //		swapAlternate(arr);

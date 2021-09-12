@@ -3,72 +3,6 @@ import java.util.*;
 
 public class ArrangeNumbersInArray {
 
-	public static int tripletSum(int arr[], int expectedSum) {
-		Arrays.sort(arr);
-		int n=arr.length;
-		int triplets=0;
-		for(int i=0;i<n;i++) {
-			int remainingSum= expectedSum-arr[i];
-			int pairs=0;
-
-			pairs=pairSum(arr, remainingSum, i+1, n-1);
-			triplets+=pairs;
-		}
-		printValue(triplets, "Triplets Sum");
-		return triplets;
-	}
-
-	public static int pairSum(int arr[], int expectedSum, int start, int end) {
-		//Arrays Sorted
-		int i=start;
-		int pairs=0;
-		int j=end;
-		while(i<j) { 
-			int currentSum=arr[i]+arr[j];
-			
-			if(currentSum < expectedSum) {
-				i++;
-			}
-			else if(currentSum > expectedSum) {
-				j--;
-			}
-			else {
-				int elementAtStart=arr[i];
-				int elementAtEnd=arr[j];
-				
-				//Equal to sum
-				if(elementAtStart == elementAtEnd) {
-					//check if all elements are same.
-					int totalElements=(j-i)+1;
-					pairs+=(totalElements*(totalElements-1) / 2);
-				
-					return pairs;
-				}
-				else {
-					int currentStart=i+1;
-					int	currentEnd=j-1;
-					
-					while(currentStart <= currentEnd && elementAtStart == arr[currentStart]) {
-						currentStart++;
-					}
-
-					while(currentEnd >= currentStart && elementAtEnd == arr[currentEnd]) {
-						currentEnd--;
-					}
-					
-					int startCount=currentStart-i;
-					int endCount=j-currentEnd;
-					pairs+=(startCount*endCount);
-					
-					i=currentStart;
-					j=currentEnd;
-				}
-			}
-		}
-
-		return pairs;	
-	}
-	
 	public static int pairSum(int arr[], int expectedSum) {
 		Arrays.sort(arr);  //O(n/2)
 		int i=0;
@@ -238,7 +172,7 @@ public class ArrangeNumbersInArray {
 		Scanner sc=new Scanner(System.in);
 		int n=sc.nextInt();
 		int arr[]=inputArray();
-		tripletSum(arr, n);
+		pairSum(arr, n);
 //		findDuplicate(arr);
 //		findUnique(arr);
 //		swapAlternate(arr);
